@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  mysqldb:
+    image: mysql:latest
+    ports:
+      - 3306:3306
+    container_name: mysqldb
+    volumes:
+      - 'mysqldb_data'
+    environment:
+      - MYSQL_ROOT_PASSWORD=${DR_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DB}
+      - MYSQL_USER=${MYSQL_USR}
+      - MYSQL_PASSWORD=${MYSQL_PW}
+    
+  drupal:
+    image: drupal:latest
+    ports:
+      - 8080:80
+    container_name: drupal
+    volumes:
+      - 'drupal_data'
+    environment: 
+      - MYSQL_HOST=${DR_HOST}
+      
+
+  wordpress:
+    image: wordpress:latest
+    ports:
+      - 8081:80
+    container_name: wordpress
+    volumes:
+      - 'wordpress_data'
+    environment: 
+      - WORDPRESS_DB_HOST=${WP_HOST}
+      - WORDPRESS_DB_USER=${MYSQL_USR}
+      - WORDPRESS_DB_PASSWORD=${MYSQL_PW}
+      - WORDPRESS_DB_NAME=${MYSQL_DB}
+
+
